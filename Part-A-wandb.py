@@ -147,12 +147,12 @@ def CNN_train(config = sweep_config):
         # Fitting the model and logging metrics (train_loss, train_acc, val_loss, val_acc) after every epoch
         model_hist = model.fit(sweep_train_data, batch_size = 32, epochs = config.num_epochs,
                                validation_data = val_data, 
-                               callbacks = [tf.keras.callbacks.EarlyStopping(monitor = 'val_loss', patience = 5),
+                               callbacks = [tf.keras.callbacks.EarlyStopping(monitor = 'val_acc', patience = 5),
                                             wandb.keras.WandbCallback()])      
 
 #################################
 # Setting up wandb sweeps
 #################################
-sweep_id = wandb.sweep(sweep_config, project = 'DL-Assignment2-PartA-5April')
+sweep_id = wandb.sweep(sweep_config, project = 'DL-Assignment2-PartA-5April-2')
 wandb.agent(sweep_id, function = CNN_train)
 
