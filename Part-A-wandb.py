@@ -100,9 +100,8 @@ sweep_config['parameters'] = parameters_dict
 #####################################
 # Defining the train function
 #####################################
-
-def CNN_train(config = sweep_config):
-    with wandb.init(config = config):
+def CNN_train(config=sweep_config):
+    with wandb.init(config=config):
         config = wandb.init().config
         wandb.run.name = 'firstLayerFilters_{}_filterOrg_{}_dataAug_{}_batchNorm_{}_dropout_{}_kerSize_{}_denseSize_{}'                                               .format(config.first_layer_filters, config.filter_org, config.data_aug, config.batch_norm,
                            config.dropout, config.kernel_size, config.dense_size)
@@ -110,49 +109,51 @@ def CNN_train(config = sweep_config):
         ###########################################
         # Initializing the model architecture
         ###########################################
-        inputs = tf.keras.Input(shape = (256, 256, 3))
-        x = Rescaling(scale = 1.0/255)(inputs)
+        inputs = tf.keras.Input(shape=(256, 256, 3))
+        x = Rescaling(scale=1.0/255)(inputs)
         filter_sizes = [int(config.first_layer_filters*(config.filter_org**layer_num)) for layer_num in range(config.conv_layers)]
         ker_size = config.kernel_size
 
         # Apply some convolution and pooling layers
         for layer_num in range(config.conv_layers):
-            x = layers.Conv2D(filters = filter_sizes[layer_num], kernel_size = (ker_size, ker_size), activation = config.activation)(x)
-            x = layers.MaxPooling2D(pool_size = (2, 2))(x)
+            x = layers.Conv2D(filters=filter_sizes[layer_num], kernel_size=(ker_size, ker_size))(x)
             if config.batch_norm:
-                x = layers.BatchNormalization(axis = -1)(x)
+                x = layers.BatchNormalization(axis=-1)(x)
+            x = layers.Activation(config.activation)(x)
+            x = layers.MaxPooling2D(pool_size=(2, 2))(x)
+            
                 
         # Dense Layer
         x = layers.Flatten()(x)
-        if config.dropout > 0:
-            x = layers.Dropout(rate = config.dropout)(x)
-        x = layers.Dense(config.dense_size, activation = config.activation)(x)
         if config.batch_norm:
-            x = layers.BatchNormalization(axis = -1)(x)
+            x = layers.BatchNormalization(axis=-1)(x)
+        x = layers.Activation(config.activation)(x)
+        if config.dropout > 0:
+            x = layers.Dropout(rate = config.dropout)(x)        
 
         # Output Layer
-        outputs = layers.Dense(10, activation = 'softmax')(x)
+        outputs = layers.Dense(10, activation ='softmax')(x)
         model = tf.keras.Model(inputs = inputs, outputs = outputs)
-        
+        #print(model.summary())
         ####################################
         # Training and evaluating the model
         ####################################
         # Using training data with or without augmentation
         sweep_train_data = train_data_aug if config.data_aug else train_data
         
-        model.compile(optimizer = config.optimizer,
+        model.compile(optimizer=config.optimizer,
                       loss = tf.keras.losses.CategoricalCrossentropy(name = 'loss'),
-                      metrics=[tf.keras.metrics.CategoricalAccuracy(name = 'acc')])
+                      metrics = [tf.keras.metrics.CategoricalAccuracy(name = 'acc')])
         
         # Fitting the model and logging metrics (train_loss, train_acc, val_loss, val_acc) after every epoch
-        model_hist = model.fit(sweep_train_data, batch_size = 32, epochs = config.num_epochs,
+        model_hist = model.fit(sweep_train_data, epochs = config.num_epochs,
                                validation_data = val_data, 
                                callbacks = [tf.keras.callbacks.EarlyStopping(monitor = 'val_acc', patience = 5),
-                                            wandb.keras.WandbCallback()])      
+                                            wandb.keras.WandbCallback()])
 
 #################################
 # Setting up wandb sweeps
 #################################
-sweep_id = wandb.sweep(sweep_config, project = 'DL-Assignment2-PartA-5April-2')
+sweep_id = wandb.sweep(sweep_config, project = 'DL-Assignment2-PartA-8April')
 wandb.agent(sweep_id, function = CNN_train)
 
