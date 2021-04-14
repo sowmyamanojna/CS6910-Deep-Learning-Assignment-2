@@ -6,7 +6,7 @@ Team members: N Sowmya Manojna (BE17B007), Shubham Kashyapi (MM16B027)
 ---
 ## Part-A Training a Smaller Network from Scratch
 ### 1. Q1 to Q3 (Model architecture and wandb sweeps)
-Part-A-Q1-to-Q3.ipynb loads the training and validation datasets. The different hyperparameter configurations for wandb are specified in the variable sweep_config.
+Part-A-Q1-to-Q3.ipynb loads the training and validation datasets. The different hyperparameter configurations for wandb are specified in the variable sweep_config. 
 ```python
 sweep_config = {'name': 'random-test-sweep', 'method': 'random'}
 sweep_config['metric'] = {'name': 'val_acc', 'goal': 'maximize'}
@@ -24,8 +24,11 @@ parameters_dict = {
                    'conv_layers': {'values': [5]}
                   }
 sweep_config['parameters'] = parameters_dict
-
 ```
+The function CNN_train defines the model architecture, trains the model and logs the metrics to wandb.
+
+### 2. Q4 (Evaluating on test set and visualizing filters)
+
 
 ## Part-B Using Pre-trained Models for Image Classification
 ### 1. Dataset
