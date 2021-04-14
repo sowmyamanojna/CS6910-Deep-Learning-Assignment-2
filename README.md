@@ -51,6 +51,7 @@ model = tf.keras.models.load_model(pathlib.Path('/content/drive/MyDrive/DL_Assig
 The code for evaluating this model on the test set (Q4 (a)), visualizing test images (Q4 (b)) and visualizing kernels (Q4 (c)) is also included in the same notebook.
 
 ### 2) Q5 (Guided backpropogation)
+PartA_Q5.ipynb
 The gradient for relu activation is redefined. The saved model is loaded and guided backpropogation is performed. The gradient images are visualized. 
 
 
