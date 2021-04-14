@@ -25,7 +25,7 @@ parameters_dict = {
                   }
 sweep_config['parameters'] = parameters_dict
 ```
-The function CNN_train defines the model architecture, trains the model and logs the metrics to wandb.
+The function CNN_train defines the model architecture, trains the model and logs the metrics to wandb. Link for wandb project https://wandb.ai/cs6910-team/DL-Assignment2-PartA-5April-2
 
 ### 2) Q4 (Training without wandb, evaluating on test set, visualizing test images and filters)
 PartA_Q4.ipynb can be used to train a model using the optimal hyperparameters obtained in Q2 and Q3. The code for loading the data, initializing the model architecture and training is similar to the previous notebook. So this notebook can be used to quickly test the code without setting up the wandb sweeps. The optimal hyperparameters are specified as follows. These can be modified for the purpose of testing the code.
