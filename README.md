@@ -9,8 +9,7 @@ Team members: N Sowmya Manojna (BE17B007), Shubham Kashyapi (MM16B027)
 ################################################################
 # Preparing training (without augmentation) and validation set 
 ################################################################
-# Preparing training and validation sets without augmentation
-# Loading data from directory
+'''python
 data_dir = pathlib.Path('/content/drive/MyDrive/inaturalist_12K/train') # Set path to the right directory
 train_data = tf.keras.preprocessing.image_dataset_from_directory(
                       directory = data_dir,
@@ -36,11 +35,10 @@ val_data = tf.keras.preprocessing.image_dataset_from_directory(
                       validation_split = 0.2,
                       subset = 'validation')
 
-# Retaining 25 percent of train and validation data and discarding the rest
 len_train, len_val = len(train_data), len(val_data)
 train_data = train_data.take(int(0.25*len_train))
 val_data = val_data.take(int(0.25*len_val))
----
+'''
 ## Part-B Using Pre-trained Models for Image Classification
 ### 1. Dataset
 The dataset can be downloaded using the [`drive_dataset_check.ipynb`](https://github.com/sowmyamanojna/CS6910-Deep-Learning-Assignment-2/blob/main/drive_dataset_check.ipynb) code present in the main directory.
