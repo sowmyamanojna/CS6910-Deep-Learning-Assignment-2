@@ -6,9 +6,7 @@ Team members: N Sowmya Manojna (BE17B007), Shubham Kashyapi (MM16B027)
 ---
 ## Part-A Training a Smaller Network from Scratch
 ### 1. Loading data
-################################################################
-# Preparing training (without augmentation) and validation set 
-################################################################
+Training data without augmentation and with augmentation can be loaded using the 
 ```python
 data_dir = pathlib.Path('/content/drive/MyDrive/inaturalist_12K/train') # Set path to the right directory
 train_data = tf.keras.preprocessing.image_dataset_from_directory(
