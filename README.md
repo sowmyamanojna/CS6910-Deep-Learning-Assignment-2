@@ -5,7 +5,41 @@ Team members: N Sowmya Manojna (BE17B007), Shubham Kashyapi (MM16B027)
 
 ---
 ## Part-A Training a Smaller Network from Scratch
+### 1. Loading data
+################################################################
+# Preparing training (without augmentation) and validation set 
+################################################################
+# Preparing training and validation sets without augmentation
+# Loading data from directory
+data_dir = pathlib.Path('/content/drive/MyDrive/inaturalist_12K/train') # Set path to the right directory
+train_data = tf.keras.preprocessing.image_dataset_from_directory(
+                      directory = data_dir,
+                      labels = 'inferred',  
+                      label_mode = 'categorical',
+                      color_mode = 'rgb',
+                      batch_size = 32,
+                      image_size = (256, 256),
+                      shuffle = True,
+                      seed = 17,
+                      validation_split = 0.2,
+                      subset = 'training')
 
+val_data = tf.keras.preprocessing.image_dataset_from_directory(
+                      directory = data_dir,
+                      labels = 'inferred',  
+                      label_mode = 'categorical',
+                      color_mode = 'rgb',
+                      batch_size = 32,
+                      image_size = (256, 256),
+                      shuffle = True,
+                      seed = 17,
+                      validation_split = 0.2,
+                      subset = 'validation')
+
+# Retaining 25 percent of train and validation data and discarding the rest
+len_train, len_val = len(train_data), len(val_data)
+train_data = train_data.take(int(0.25*len_train))
+val_data = val_data.take(int(0.25*len_val))
 ---
 ## Part-B Using Pre-trained Models for Image Classification
 ### 1. Dataset
