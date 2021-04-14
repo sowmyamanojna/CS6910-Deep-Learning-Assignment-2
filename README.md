@@ -28,7 +28,22 @@ sweep_config['parameters'] = parameters_dict
 The function CNN_train defines the model architecture, trains the model and logs the metrics to wandb.
 
 ### 2. Q4 (Evaluating on test set and visualizing filters)
-
+PartA_Q4.ipynb can be used to train a model using the optimal hyperparameters obtained in Q2 and Q3. The code for loading the data, initializing the model architecture and training is similar to the previous notebook. But this notebook can be used to quickly test the code without setting up the wandb sweeps. The optimal hyperparameters are specified as follows. These can be modified for the purpose of testing the code.
+```python
+optimal = {
+              'first_layer_filters': 64,
+              'filter_org': 1, # Same number of filters in all convolution layers
+              'data_aug': True,
+              'batch_norm': True, 
+              'dropout': 0.2,
+              'kernel_size': 3,
+              'dense_size': 128,
+              'activation': 'relu',
+              'num_epochs': 50, 
+              'optimizer': 'adam',
+              'conv_layers': 5
+          }
+```
 
 ## Part-B Using Pre-trained Models for Image Classification
 ### 1. Dataset
