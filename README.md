@@ -5,7 +5,7 @@ Team members: N Sowmya Manojna (BE17B007), Shubham Kashyapi (MM16B027)
 
 ---
 ## Part-A Training a Smaller Network from Scratch
-### 1. Q1 to Q3 (Model architecture and wandb sweeps)
+### 1) Q1 to Q3 (Model architecture and wandb sweeps)
 Part-A-Q1-to-Q3.ipynb loads the training and validation datasets. The different hyperparameter configurations for wandb are specified in the variable sweep_config. 
 ```python
 sweep_config = {'name': 'random-test-sweep', 'method': 'random'}
@@ -27,7 +27,7 @@ sweep_config['parameters'] = parameters_dict
 ```
 The function CNN_train defines the model architecture, trains the model and logs the metrics to wandb.
 
-### 2. Q4 (Evaluating on test set and visualizing filters)
+### 2) Q4 (Evaluating on test set and visualizing filters)
 PartA_Q4.ipynb can be used to train a model using the optimal hyperparameters obtained in Q2 and Q3. The code for loading the data, initializing the model architecture and training is similar to the previous notebook. But this notebook can be used to quickly test the code without setting up the wandb sweeps. The optimal hyperparameters are specified as follows. These can be modified for the purpose of testing the code.
 ```python
 optimal = {
@@ -48,6 +48,11 @@ The trained model can also be accessed directly at https://drive.google.com/driv
 ```python
 model = tf.keras.models.load_model(pathlib.Path('/content/drive/MyDrive/DL_Assignment2_PartA_Model'))
 ```
+The code for evaluating this model on the test set (Q4 (a)), visualizing test images (Q4 (b)) and visualizing kernels (Q4 (c)) is also included in the same notebook.
+
+### 2) Q5 (Guided backpropogation)
+
+
 
 ## Part-B Using Pre-trained Models for Image Classification
 ### 1. Dataset
