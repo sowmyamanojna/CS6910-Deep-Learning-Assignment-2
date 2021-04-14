@@ -5,37 +5,26 @@ Team members: N Sowmya Manojna (BE17B007), Shubham Kashyapi (MM16B027)
 
 ---
 ## Part-A Training a Smaller Network from Scratch
-### 1. Loading data
-Training data without augmentation and with augmentation can be loaded using the 
+### 1. Q1 to Q3 (Model architecture and wandb sweeps)
+Part-A-Q1-to-Q3.ipynb loads the training and validation datasets. The different hyperparameter configurations for wandb are specified in the variable sweep_config.
 ```python
-data_dir = pathlib.Path('/content/drive/MyDrive/inaturalist_12K/train') # Set path to the right directory
-train_data = tf.keras.preprocessing.image_dataset_from_directory(
-                      directory = data_dir,
-                      labels = 'inferred',  
-                      label_mode = 'categorical',
-                      color_mode = 'rgb',
-                      batch_size = 32,
-                      image_size = (256, 256),
-                      shuffle = True,
-                      seed = 17,
-                      validation_split = 0.2,
-                      subset = 'training')
+sweep_config = {'name': 'random-test-sweep', 'method': 'random'}
+sweep_config['metric'] = {'name': 'val_acc', 'goal': 'maximize'}
+parameters_dict = {
+                   'first_layer_filters': {'values': [32, 64]},
+                   'filter_org': {'values': [0.5, 1, 2]}, # Halving, same, doubling in subsequent layers
+                   'data_aug': {'values': [False, True]},
+                   'batch_norm': {'values': [False, True]}, 
+                   'dropout': {'values': [0.0, 0.2, 0.3]},
+                   'kernel_size': {'values': [3,5,7]},
+                   'dense_size': {'values': [32, 64, 128]},
+                   'activation': {'values': ['relu']},
+                   'num_epochs': {'values': [50]}, 
+                   'optimizer': {'values': ['adam']},
+                   'conv_layers': {'values': [5]}
+                  }
+sweep_config['parameters'] = parameters_dict
 
-val_data = tf.keras.preprocessing.image_dataset_from_directory(
-                      directory = data_dir,
-                      labels = 'inferred',  
-                      label_mode = 'categorical',
-                      color_mode = 'rgb',
-                      batch_size = 32,
-                      image_size = (256, 256),
-                      shuffle = True,
-                      seed = 17,
-                      validation_split = 0.2,
-                      subset = 'validation')
-
-len_train, len_val = len(train_data), len(val_data)
-train_data = train_data.take(int(0.25*len_train))
-val_data = val_data.take(int(0.25*len_val))
 ```
 
 ## Part-B Using Pre-trained Models for Image Classification
