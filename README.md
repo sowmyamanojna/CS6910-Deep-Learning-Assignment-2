@@ -44,6 +44,10 @@ optimal = {
               'conv_layers': 5
           }
 ```
+The trained model can also be accessed directly at https://drive.google.com/drive/folders/1343Tk13X9iyIxdF4SityFtGOV9soLS5c?usp=sharing
+```python
+model = tf.keras.models.load_model(pathlib.Path('/content/drive/MyDrive/DL_Assignment2_PartA_Model'))
+```
 
 ## Part-B Using Pre-trained Models for Image Classification
 ### 1. Dataset
